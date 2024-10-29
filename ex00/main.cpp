@@ -1,6 +1,5 @@
 #include "easyfind.hpp"
 #include "easyfind.tpp"
-#include <vector>
 #include <iostream>
 #include <cstdlib>
 
@@ -8,7 +7,7 @@ int main(int ac, char **av)
 {
     if (ac == 2)
     {
-        std::vector<int>::iterator res;
+        std::vector<int>::iterator resVector;
         std::vector<int> testVector;
         testVector.push_back(5);
         testVector.push_back(-5);
@@ -17,7 +16,6 @@ int main(int ac, char **av)
         testVector.push_back(558);
 
         std::list<int>::iterator resList;
-
         std::list<int> testList;
         testList.push_back(1);
         testList.push_back(78);
@@ -25,63 +23,60 @@ int main(int ac, char **av)
         testList.push_back(-988);
         testList.push_back(0);
 
-        std::map<int, int>::iterator resMap;
-
-        std::map<int, int> testMap;
-        testMap.insert(std::pair<int, int>(1, 1));
-        testMap.insert(std::pair<int, int>(2, 2));
-        testMap.insert(std::pair<int, int>(42, -42));
-
+        std::deque<int>::iterator resDeque;
+        std::deque<int> testDeque;
+        testDeque.push_back(1);
+        testDeque.push_back(78);
+        testDeque.push_back(42);
+        testDeque.push_back(-988);
+        testDeque.push_front(0);
 
         std::cout << "Want to find : " << atoi(av[1]) << std::endl;
         std::cout << std::endl;
 
-        std::cout << "Vector test : " << std::endl;
-
-        for (std::vector<int>::iterator it = testVector.begin(); it != testVector.end(); ++it) {
-            std::cout << *it << " ";
-        }
+        std::cout << "---------- Vector test ----------" << std::endl;
+        for_each(testVector.begin(), testVector.end(), DisplayContainer<int>);
+        std::cout << std::endl;
+        resVector = easyfind(testVector, atoi(av[1]));
+        DisplayResult(testVector, resVector);
         std::cout << std::endl;
 
-        res = easyfind(testVector, atoi(av[1]));
-
-        if (res != testVector.end()) {
-            std::cout << "res : " << *resList << std::endl;
-        } else {
-            std::cout << "Value not found in vector" << std::endl;
-        }
-
+        std::cout << "---------- List test ----------" << std::endl;
+        for_each(testList.begin(), testList.end(), DisplayContainer<int>);
         std::cout << std::endl;
-        std::cout << "List test : " << std::endl;
-
-        for (std::list<int>::iterator it = testList.begin(); it != testList.end(); ++it) {
-            std::cout << *it << " ";
-        }
-        std::cout << std::endl;
-
         resList = easyfind(testList, atoi(av[1]));
-        if (resList != testList.end()) {
-            std::cout << "resList : " << *resList << std::endl;
-        } else {
-            std::cout << "Value not found in list" << std::endl;
-        }
+        DisplayResult(testList, resList);
         std::cout << std::endl;
 
-        std::cout << "Map test : " << std::endl;
-        for(std::map<int, int>::iterator it = testMap.begin() ; it != testMap.end() ; it++)
-        {
-            std::cout << "key : " << it->first << " value : " << it->second << std::endl;
-        }
-
-        resMap = easyfind(testMap, atoi(av[1]));
-        if (resMap != testMap.end())
-            std::cout << "testMap : " << resMap->first << " value : " << resMap->second << std::endl;
-        else
-            std::cout << "Value not found in map" << std::endl;
-
-        
-
+        std::cout << "---------- Deque test ----------" << std::endl;
+        for_each(testDeque.begin(), testDeque.end(), DisplayContainer<int>);
+        std::cout << std::endl;
+        resDeque = easyfind(testDeque, atoi(av[1]));
+        DisplayResult(testDeque, resDeque);
     }
 
     return (0);
 }
+
+/*
+    NOTES:
+
+    Deque:
+        Application pour deque -> rotation (sur une liste d'éléments de données).
+        Sens des aiguilles d'une montre : retirer élément de l'arrière et l'insérer à l'avant.
+
+    List :
+        Doublement chaine, next, previous
+        Forward_list, C11 : Un sens, element pointe sur le suivant, necessite moins de memoire
+
+    Function for_each(InputIterator first, InputIterator last, Function fn)
+    {
+        while (first!=last) {
+            fn (*first);
+            ++first;
+        }
+    return fn;
+    }
+
+    for_each attend une fonction/foncteur avec en argument element et non iterateur
+*/
