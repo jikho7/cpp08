@@ -12,9 +12,9 @@
 
 class Span
 {
-    std::vector<int> _vec;
-    std::vector<int>::iterator _it;
-    int _smallestDistance;
+    std::vector<int>            _vec;
+    std::vector<int>::iterator  _it;
+    int                         _smallestDistance;
 
     public:
     Span(unsigned int N);
@@ -42,9 +42,10 @@ class Span
     const std::vector<int>& getVec() const;
 
     //METHODS
-    void addNumber(unsigned int toAdd);       // ajoute un seul nombre a Span
-    int shortestSpan();    // trouve + courte distance entre nb, return cette distance
-    int longestSpan();
+    void                        addNumber(unsigned int toAdd);       // ajoute un seul nombre a Span
+    void                        addMultipleNumbers(std::vector<int>::iterator begin, std::vector<int>::iterator end);
+    int                         shortestSpan();    // trouve + courte distance entre nb, return cette distance
+    int                         longestSpan();
 };
 
 std::ostream &operator<<(std::ostream &os, const Span &other);

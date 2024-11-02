@@ -42,6 +42,18 @@ void Span::addNumber(unsigned int toAdd)
     }
 }
 
+void Span::addMultipleNumbers(std::vector<int>::iterator begin, std::vector<int>::iterator end)
+{
+    try
+    {
+        for(std::vector<int>::iterator it = begin; it != end; ++it)
+        {
+            *this->_it = *it;
+            ++this->_it;
+        }
+    } catch(const std::exception& e){
+        throw Span::vecFull();}
+}
 
 int Span::shortestSpan()
 {
@@ -51,7 +63,7 @@ int Span::shortestSpan()
 
     std::sort(tmp.begin(), tmp.end());
     std::unique_copy(tmp.begin(), tmp.end(), std::back_inserter(uniqueVec)); // vire les doubles et stocker res dans uniqueVec, back_inserter insert el to the end and manage vec size automatically
-    //for (std::vector<int>::iterator it = uniqueVec.begin(); it != uniqueVec.end(); ++it){std::cout << *it << " ";}
+    ///for (std::vector<int>::iterator it = uniqueVec.begin(); it != uniqueVec.end(); ++it){std::cout << *it << " ";}
     for(size_t i = 1; i < uniqueVec.size(); i++)
     {
         int distance = uniqueVec[i] - uniqueVec[i - 1];
@@ -80,6 +92,3 @@ std::ostream &operator<<(std::ostream &os, const Span &other)
     os << std::endl;
     return os;
 }
-
-/* Pseudo code
-*/
